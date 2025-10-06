@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request a Quote | Brishid</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Brishid</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="contact.html" class="active">Get a Quote</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="section">
+    <h2>Request a Quote</h2>
+    <p>Fill out the form below to request a quote or ask any questions. We’ll respond as soon as possible.</p>
+    <form action="https://formsubmit.co/YOUR_EMAIL@example.com" method="POST">
+      <!-- Formsubmit settings -->
+      <input type="hidden" name="_subject" value="Brishid Quote Request">
+      <input type="hidden" name="_captcha" value="false">
+      <!-- Redirect to local thank you page after successful submission -->
+      <input type="hidden" name="_next" value="thankyou.html">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" name="phone">
+      </div>
+      <div class="form-group">
+        <label for="company">Company Name</label>
+        <input type="text" id="company" name="company">
+      </div>
+      <div class="form-group">
+        <label for="product">Product of Interest</label>
+        <input type="text" id="product" name="product">
+      </div>
+      <div class="form-group">
+        <label for="quantity">Quantity (if known)</label>
+        <input type="text" id="quantity" name="quantity">
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message"></textarea>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; <span id="year"></span> Brishid. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

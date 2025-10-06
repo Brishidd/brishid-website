@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services | Brishid</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Brishid</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html" class="active">Services</a></li>
+          <li><a href="contact.html">Get a Quote</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="section">
+    <h2>Our Services</h2>
+    <div class="services">
+      <div class="service">
+        <h3>Brokerage</h3>
+        <p>We facilitate deals between food producers and buyers, negotiating contracts and ensuring clear communication throughout the process.</p>
+      </div>
+      <div class="service">
+        <h3>Import & Export Management</h3>
+        <p>Brishid manages the shipment of products across borders. We handle customs clearance, shipping logistics and documentation to ensure timely delivery.</p>
+      </div>
+      <div class="service">
+        <h3>Quality & Compliance</h3>
+        <p>We work closely with suppliers to verify quality and meet all regulatory standards. Our team prepares the necessary documents for smooth entry into target markets.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; <span id="year"></span> Brishid. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
