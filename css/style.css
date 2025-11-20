@@ -56,13 +56,15 @@ a:hover {
 }
 
 .hero {
-backgrbound: url('https://images.pexels.com/photos/2582652/pexels-photo-2582652.jpeg') no-repeat center center/cover;kground: urlhttps://images.pexels.com/photos/2582652/pexels-photo-2582652.jpegimages/hero.jpg') no-repeat center center/cover;
+  background: url('../images/hero.jpg') no-repeat center center/cover;
   height: 400px;
   display: flex;
   justify-content: center;
-  
+  align-items: center;
+  color: #fff;
+  text-align: center;
   position: relative;
-align-items: center;
+}
 
 .hero::after {
   content: '';
