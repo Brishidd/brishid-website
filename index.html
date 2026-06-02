@@ -1,59 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Brishid Café Powder Collection</title>
-    <!-- The primary stylesheet for the interactive catalogue. -->
-    <link rel="stylesheet" href="assets/css/style.css" />
-  </head>
-  <body>
-    <!--
-      The hero section introduces the brand with an immersive backdrop.  
-      We use a full‑width, full‑height image behind a dark overlay to evoke
-      the premium look of the Brishid label. A short tagline invites
-      visitors to explore the catalogue below.
-    -->
-    <section class="hero">
-      <img src="assets/img/hero.png" alt="Brishid powders flying" class="hero-bg" />
-      <div class="hero-content">
-        <h1>Brishid Café Powder Collection</h1>
-        <p>Premium powders for modern beverage artisans</p>
-        <a href="#catalogue" class="cta-button">Explore Catalogue</a>
-      </div>
-    </section>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brishid Premium Powders Catalogue</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <!-- Navigation with brand and colourful accent line -->
+    <nav>
+        <div class="nav-left">
+            <span class="nav-logo">BRISHID</span>
+            <div class="nav-subtitle">Café Ingredients</div>
+            <div class="nav-line"></div>
+        </div>
+        <div class="nav-right">
+            <a href="#catalogue" class="nav-link">Catalogue</a>
+            <a href="#cta" class="nav-link">Wholesale</a>
+        </div>
+    </nav>
 
-    <!-- Main catalogue section. Each powder will be injected here via script.js. -->
+    <!-- Hero section with headline and call‑to‑action -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Premium Powders for Modern Creators</h1>
+            <p>Carefully sourced. Expertly crafted. Designed for cafés, creators and professionals who demand the finest.</p>
+            <a href="#catalogue" class="cta-button">Explore Catalogue</a>
+        </div>
+    </header>
+
+    <!-- Catalogue section built from product data via JS -->
     <section id="catalogue" class="catalogue">
-      <h2>Our Powder Collection</h2>
-      <p class="catalogue-description">
-        Scroll to discover our complete range of café powders. Each product
-        animates as you move, reflecting the energy and motion of powders in
-        use. Click a card to learn more about its flavour profile and
-        applications.
-      </p>
-      <div class="products" id="productContainer"></div>
+        <h2>Our Catalogue</h2>
+        <div id="product-grid" class="product-grid"></div>
     </section>
 
-    <!-- Footer with contact and legal details. -->
-    <footer class="site-footer">
-      <div class="footer-content">
-        <div class="footer-brand">
-          <h3>Brishid</h3>
-          <p>Elevating beverages through premium powders and purposeful ingredients.</p>
+    <!-- Wholesale and sample request call‑to‑action -->
+    <section id="cta" class="cta">
+        <h2>Elevate Your Menu</h2>
+        <p>Partner with Brishid and craft signature beverages with our premium powders. Contact us for wholesale pricing or request a complimentary sample kit.</p>
+        <a href="https://wa.me/16479373125" target="_blank" class="cta-primary">Request Sample on WhatsApp</a>
+        <a href="mailto:info@brishid.com" class="cta-secondary">Email Our Team</a>
+    </section>
+
+    <!-- Footer with contact information -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <h3>Brishid</h3>
+                <p>Elevating beverages through premium powders and purposeful ingredients.</p>
+            </div>
+            <div class="footer-right">
+                <p><strong>Email:</strong> info@brishid.com</p>
+                <p><strong>WhatsApp:</strong> +1 (647) 937‑3125</p>
+                <p><strong>Location:</strong> Toronto, Canada</p>
+            </div>
         </div>
-        <div class="footer-links">
-          <h4>Get in touch</h4>
-          <ul>
-            <li><a href="mailto:info@brishid.com">info@brishid.com</a></li>
-            <li><a href="https://wa.me/971502425336">WhatsApp: +971 50 242 5336</a></li>
-          </ul>
-        </div>
-      </div>
-      <p class="copyright">&copy; 2026 Brishid. All rights reserved.</p>
+        <div class="footer-bottom">© 2026 Brishid. All rights reserved.</div>
     </footer>
 
-    <!-- The main script. Dynamically builds the catalogue and hooks up animations. -->
-    <script src="assets/js/script.js"></script>
-  </body>
+    <!-- Scripts -->
+    <script>
+    // Brishid interactive catalogue script (inline to ensure execution)
+    document.addEventListener('DOMContentLoaded', () => {
+      const products = [
+        { id: 'matcha', name: 'Ceremonial Matcha', tagline: 'Japanese heritage in every cup.' },
+        { id: 'ube', name: 'Ube Powder', tagline: 'Rich, creamy purple sweetness.' },
+        { id: 'spirulina', name: 'Spirulina Powder', tagline: 'Vivid blue superfood for wellness.' },
+        { id: 'taro', name: 'Taro Powder', tagline: 'Sweet taro creaminess in style.' },
+        { id: 'turmeric', name: 'Turmeric Powder', tagline: 'Golden warmth and ancient spice.' },
+        { id: 'cacao', name: 'Cacao Powder', tagline: 'Deep chocolate for indulgent drinks.' },
+        { id: 'hojicha', name: 'Hojicha Powder', tagline: 'Roasted tea with nutty notes.' },
+        { id: 'strawberry', name: 'Strawberry Powder', tagline: 'Vibrant pink for fruity delights.' },
+        { id: 'vanilla', name: 'Vanilla Powder', tagline: 'Sweet and creamy classic flavour.' },
+        { id: 'ginger', name: 'Ginger Powder', tagline: 'Warm spice for invigorating blends.' },
+        { id: 'coconut', name: 'Coconut Powder', tagline: 'Tropical white for smooth sips.' },
+        { id: 'beetroot', name: 'Beetroot Powder', tagline: 'Bold magenta with earthy sweetness.' }
+      ];
+      const grid = document.getElementById('product-grid');
+      if (grid) {
+        products.forEach(product => {
+          const card = document.createElement('div');
+          card.classList.add('card', product.id);
+          card.innerHTML = `<h3>${product.name}</h3><p>${product.tagline}</p>`;
+          grid.appendChild(card);
+        });
+      }
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.25 });
+      document.querySelectorAll('.card').forEach(card => {
+        observer.observe(card);
+      });
+    });
+    </script>
+</body>
 </html>

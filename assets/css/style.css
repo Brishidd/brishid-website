@@ -1,216 +1,351 @@
 /*
-  Global styles for the Brishid interactive catalogue.
+ * Brishid Premium Catalogue Styles
+ *
+ * This stylesheet defines the look and feel of the Brishid interactive
+ * catalogue. It embraces a dark, luxurious palette and makes use of
+ * colour variables to tie each powder to its distinctive hue. Scroll
+ * animations are handled via CSS transitions; additional logic in
+ * script.js applies the `visible` class when elements enter the
+ * viewport.
+ */
 
-  The dark theme reflects the brand’s label and catalogue aesthetic. Each
-  product card uses a custom property (--color) passed from the
-  JavaScript to tint backgrounds and animated elements. Scroll‑based
-  animations rely on CSS only for smooth performance and minimal
-  dependency overhead.
-*/
-
-/* Reset margins and paddings for consistency */
-* {
+/* CSS Reset (simple) */
+*, *::before, *::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
-body {
-  font-family: system-ui, sans-serif;
-  background-color: #0a0a0a;
-  color: #eaeaea;
-  line-height: 1.6;
+html, body {
   scroll-behavior: smooth;
+  font-family: 'Inter', sans-serif;
+  color: #f0f0f0;
+  background-color: #0a0a0a;
+  line-height: 1.5;
 }
 
-a {
+/* Colour palette derived from catalogue and label */
+:root {
+  --matcha: #73b42f;
+  --ube: #7953a2;
+  --spirulina: #005e72;
+  --taro: #705678;
+  --turmeric: #d4a02a;
+  --cacao: #4d2e22;
+  --hojicha: #745037;
+  --strawberry: #971f40;
+  --vanilla: #c5b59a;
+  --ginger: #b28132;
+  --coconut: #d7c9b5;
+  --beetroot: #81103f;
+  --accent-start: #73b42f;
+  --accent-end: #81103f;
+  --text-primary: #f5f5f5;
+  --text-secondary: #c2c2c2;
+}
+
+/* Navigation */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(10, 10, 10, 0.9);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.nav-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--text-primary);
+}
+
+.nav-subtitle {
+  font-size: 0.75rem;
+  color: var(--vanilla);
+  text-transform: uppercase;
+  margin-top: 0.2rem;
+  letter-spacing: 1px;
+}
+
+.nav-line {
+  height: 4px;
+  width: 120px;
+  margin-top: 0.4rem;
+  border-radius: 4px;
+  /* colourful gradient reflecting the powder range */
+  background: linear-gradient(
+    to right,
+    var(--matcha) 0%,
+    var(--ube) 18%,
+    var(--spirulina) 30%,
+    var(--turmeric) 45%,
+    var(--cacao) 55%,
+    var(--strawberry) 70%,
+    var(--vanilla) 80%,
+    var(--beetroot) 100%
+  );
+}
+
+.nav-right .nav-link {
+  margin-left: 1.5rem;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
   text-decoration: none;
-  color: inherit;
+  transition: color 0.3s ease;
 }
 
-/* Hero section styles */
+.nav-right .nav-link:hover {
+  color: var(--text-primary);
+}
+
+/* Hero section */
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: 85vh;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  overflow: hidden;
+  background-image: url('../img/hero.png');
+  background-size: cover;
+  background-position: center;
+  padding-top: 4rem; /* offset for fixed nav */
 }
 
-.hero-bg {
+.hero::after {
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  filter: brightness(0.4) contrast(1.2);
-  z-index: -1;
+  background: rgba(0, 0, 0, 0.55);
 }
 
 .hero-content {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
+  position: relative;
+  max-width: 700px;
+  z-index: 1;
+  padding: 0 1rem;
 }
 
-.hero h1 {
+.hero-content h1 {
   font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.2;
   margin-bottom: 1rem;
 }
 
-.hero p {
-  font-size: 1.25rem;
+.hero-content p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
   margin-bottom: 2rem;
 }
 
 .cta-button {
   display: inline-block;
-  padding: 0.8rem 2rem;
-  border: 2px solid #eaeaea;
-  border-radius: 0.5rem;
-  font-weight: bold;
-  transition: background-color 0.3s, color 0.3s;
+  padding: 0.9rem 2rem;
+  font-size: 1rem;
+  background: transparent;
+  border: 1px solid var(--text-primary);
+  color: var(--text-primary);
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .cta-button:hover {
-  background-color: #eaeaea;
+  background: var(--text-primary);
   color: #0a0a0a;
 }
 
 /* Catalogue section */
 .catalogue {
-  padding: 4rem 1rem;
+  padding: 5rem 2rem 2rem;
   max-width: 1200px;
   margin: 0 auto;
-  text-align: center;
 }
 
 .catalogue h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+  font-size: 2.4rem;
+  margin-bottom: 3rem;
+  text-align: center;
 }
 
-.catalogue-description {
-  max-width: 700px;
-  margin: 0.5rem auto 3rem;
-  color: #b8b8b8;
-}
-
-.products {
+.product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
-.product-card {
+.card {
   position: relative;
-  padding: 2rem;
-  border-radius: 1rem;
+  padding: 2rem 1.5rem;
+  background: #111;
+  border-radius: 12px;
   overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.4s ease;
-  /* A slightly lighter background to provide contrast against the dark page */
-  background-color: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(6px);
-
-  /* Start hidden for reveal animations */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+  transition: transform 0.6s ease, opacity 0.6s ease;
+  transform: translateY(30px);
   opacity: 0;
-  transform: translateY(40px);
 }
 
-.product-card:hover {
-  transform: translateY(-8px);
+.card.visible {
+  transform: translateY(0);
+  opacity: 1;
 }
 
-.product-card h3 {
-  font-size: 1.5rem;
+.card h3 {
+  font-size: 1.3rem;
+  color: var(--text-primary);
   margin-bottom: 0.5rem;
-  color: var(--color);
 }
 
-.product-card p {
-  font-size: 0.95rem;
-  color: #cfcfcf;
-  margin-bottom: 1rem;
+.card p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
 }
 
-/* Animated swirl behind each card using pseudo-element */
-.product-card::before {
-  content: "";
+/* swirling background effect via pseudo element */
+.card::before {
+  content: '';
   position: absolute;
   top: -50%;
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle at center, var(--color) 0%, transparent 60%);
-  opacity: 0.25;
-  transform: rotate(45deg);
-  animation: spin 12s linear infinite;
-  z-index: -1;
+  border-radius: 50%;
+  transform: scale(0.7);
+  opacity: 0;
+  transition: opacity 1.2s ease, transform 1.2s ease;
+  filter: blur(40px);
 }
 
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* When observed, fade in product cards */
-.product-card.visible {
+.card.visible::before {
+  transform: scale(1);
   opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
 }
 
-/* Footer styles */
-.site-footer {
-  background-color: #0e0e0e;
-  padding: 2rem 1rem;
-  color: #a5a5a5;
-  font-size: 0.9rem;
+/* Colour-specific backgrounds for swirl */
+.card.matcha::before { background: radial-gradient(circle, var(--matcha) 0%, rgba(0,0,0,0) 80%); }
+.card.ube::before { background: radial-gradient(circle, var(--ube) 0%, rgba(0,0,0,0) 80%); }
+.card.spirulina::before { background: radial-gradient(circle, var(--spirulina) 0%, rgba(0,0,0,0) 80%); }
+.card.taro::before { background: radial-gradient(circle, var(--taro) 0%, rgba(0,0,0,0) 80%); }
+.card.turmeric::before { background: radial-gradient(circle, var(--turmeric) 0%, rgba(0,0,0,0) 80%); }
+.card.cacao::before { background: radial-gradient(circle, var(--cacao) 0%, rgba(0,0,0,0) 80%); }
+.card.hojicha::before { background: radial-gradient(circle, var(--hojicha) 0%, rgba(0,0,0,0) 80%); }
+.card.strawberry::before { background: radial-gradient(circle, var(--strawberry) 0%, rgba(0,0,0,0) 80%); }
+.card.vanilla::before { background: radial-gradient(circle, var(--vanilla) 0%, rgba(0,0,0,0) 80%); }
+.card.ginger::before { background: radial-gradient(circle, var(--ginger) 0%, rgba(0,0,0,0) 80%); }
+.card.coconut::before { background: radial-gradient(circle, var(--coconut) 0%, rgba(0,0,0,0) 80%); }
+.card.beetroot::before { background: radial-gradient(circle, var(--beetroot) 0%, rgba(0,0,0,0) 80%); }
+
+/* Call‑to‑action section */
+.cta {
+  background: #0d0d0d;
+  padding: 4rem 2rem;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.cta h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.cta p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin: 0 auto 2rem;
+}
+
+.cta-primary, .cta-secondary {
+  display: inline-block;
+  margin: 0.5rem;
+  padding: 0.8rem 1.6rem;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.cta-primary {
+  background: var(--matcha);
+  color: #0a0a0a;
+}
+
+.cta-primary:hover {
+  background: var(--ube);
+  color: #0a0a0a;
+}
+
+.cta-secondary {
+  background: transparent;
+  border: 1px solid var(--text-primary);
+  color: var(--text-primary);
+}
+
+.cta-secondary:hover {
+  background: var(--text-primary);
+  color: #0a0a0a;
+}
+
+/* Footer */
+footer {
+  background: #0a0a0a;
+  color: var(--text-secondary);
+  padding: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
 }
 
 .footer-content {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: space-between;
-  gap: 2rem;
+  align-items: flex-start;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-.footer-brand h3 {
-  font-size: 1.5rem;
+.footer-left h3 {
+  font-size: 1.4rem;
   margin-bottom: 0.5rem;
-  color: #fff;
 }
 
-.footer-links ul {
-  list-style: none;
+.footer-right p {
+  margin-bottom: 0.4rem;
 }
 
-.footer-links li + li {
-  margin-top: 0.5rem;
-}
-
-.footer-links a {
-  color: #c4c4c4;
-  transition: color 0.3s;
-}
-
-.footer-links a:hover {
-  color: #fff;
-}
-
-.copyright {
+.footer-bottom {
   margin-top: 2rem;
   text-align: center;
   font-size: 0.8rem;
-  color: #666;
+  color: var(--text-secondary);
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .footer-content {
+    flex-direction: row;
+  }
+  .nav-line {
+    width: 180px;
+  }
+  .nav-right .nav-link {
+    font-size: 1rem;
+  }
 }
