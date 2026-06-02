@@ -22,10 +22,10 @@ if (grid) {
     card.style.setProperty('--tone', product.tone);
     card.innerHTML = `
       <span class="powder-number">${String(index + 1).padStart(2, '0')}</span>
-      <span class="powder-orb" aria-hidden="true"></span>
+      <span class="powder-sample" aria-hidden="true"></span>
       <span class="powder-name">${product.name}</span>
       <span class="powder-note">${product.note}</span>
-      <span class="powder-link">Open product page</span>
+      <span class="powder-link">View product</span>
     `;
     grid.appendChild(card);
   });
@@ -33,20 +33,21 @@ if (grid) {
 
 const canvas = document.getElementById('powder-canvas');
 const ctx = canvas.getContext('2d');
-let width = 0;
-let height = 0;
+let dpr = Math.min(window.devicePixelRatio || 1, 2);
+let particles = [];
 let lastScroll = window.scrollY;
 let scrollVelocity = 0;
-let pointerX = 0.5;
-let pointerY = 0.5;
-let particles = [];
+let centerX = window.innerWidth * 0.56;
+let centerY = window.innerHeight * 0.5;
+let clockwiseRotation = 0;
 
 function resizeCanvas() {
-  width = canvas.width = window.innerWidth * window.devicePixelRatio;
-  height = canvas.height = window.innerHeight * window.devicePixelRatio;
+  dpr = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = Math.floor(window.innerWidth * dpr);
+  canvas.height = Math.floor(window.innerHeight * dpr);
   canvas.style.width = window.innerWidth + 'px';
   canvas.style.height = window.innerHeight + 'px';
-  ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
 
 function activePalette() {
@@ -65,50 +66,74 @@ function activePalette() {
   return products.filter(p => ids.includes(p.id));
 }
 
-function burst(amount = 7) {
+function updateCenter() {
+  const stage = document.querySelector('.hero-stage');
+  const visibleStage = stage && stage.getBoundingClientRect().bottom > 0 && stage.getBoundingClientRect().top < window.innerHeight;
+  if (visibleStage) {
+    const rect = stage.getBoundingClientRect();
+    centerX = rect.left + rect.width * 0.5;
+    centerY = rect.top + rect.height * 0.5;
+  } else {
+    centerX = window.innerWidth * 0.5;
+    centerY = window.innerHeight * 0.48;
+  }
+}
+
+function circularDust(amount = 8, radiusBase = 130) {
+  updateCenter();
   const palette = activePalette();
+  const velocityBoost = Math.min(1.4, Math.abs(scrollVelocity) / 90);
   for (let i = 0; i < amount; i++) {
-    const p = palette[Math.floor(Math.random() * palette.length)] || products[0];
-    const direction = Math.random() > 0.5 ? 1 : -1;
+    const product = palette[Math.floor(Math.random() * palette.length)] || products[0];
+    const angle = clockwiseRotation + Math.random() * Math.PI * 2;
+    const radius = radiusBase + Math.random() * 160;
+    const x = centerX + Math.cos(angle) * radius;
+    const y = centerY + Math.sin(angle) * radius * 0.55;
+
+    // Clockwise tangent: dx/dt = sin, dy/dt = -cos.
+    const tangentPower = 0.55 + Math.random() * 0.95 + velocityBoost;
+    const radialDrift = -0.03 + Math.random() * 0.10;
     particles.push({
-      x: (0.12 + Math.random() * 0.76) * window.innerWidth,
-      y: (0.18 + Math.random() * 0.64) * window.innerHeight,
-      vx: direction * (0.4 + Math.random() * 2.2) + (pointerX - 0.5) * 1.8,
-      vy: -0.8 - Math.random() * 2.4 + scrollVelocity * 0.025,
-      size: 8 + Math.random() * 42,
-      life: 1,
-      decay: 0.006 + Math.random() * 0.015,
-      color: p.tone,
-      spin: Math.random() * Math.PI * 2
+      x,
+      y,
+      vx: Math.sin(angle) * tangentPower + Math.cos(angle) * radialDrift,
+      vy: -Math.cos(angle) * tangentPower * 0.55 + Math.sin(angle) * radialDrift,
+      size: 1.2 + Math.random() * 4.8,
+      life: 0.65 + Math.random() * 0.35,
+      decay: 0.008 + Math.random() * 0.014,
+      color: product.tone,
+      alpha: 0.16 + Math.random() * 0.26,
+      grain: Math.random() > 0.72
     });
   }
-  if (particles.length > 340) particles = particles.slice(particles.length - 340);
+  if (particles.length > 520) particles = particles.slice(-520);
 }
 
 function draw() {
   ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-  ctx.globalCompositeOperation = 'screen';
+  ctx.globalCompositeOperation = 'source-over';
+  clockwiseRotation += 0.006;
 
   particles.forEach(p => {
     p.x += p.vx;
     p.y += p.vy;
-    p.vy += 0.018;
-    p.vx *= 0.992;
+    p.vx *= 0.996;
+    p.vy *= 0.996;
     p.life -= p.decay;
-    p.spin += 0.01;
 
-    const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
-    gradient.addColorStop(0, p.color + 'ee');
-    gradient.addColorStop(0.42, p.color + '70');
-    gradient.addColorStop(1, p.color + '00');
-    ctx.globalAlpha = Math.max(p.life, 0) * 0.82;
+    const alpha = Math.max(p.life, 0) * p.alpha;
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = p.color;
     ctx.beginPath();
-    ctx.ellipse(p.x, p.y, p.size * (1.45 + Math.sin(p.spin) * 0.2), p.size * 0.68, p.spin, 0, Math.PI * 2);
-    ctx.fillStyle = gradient;
+    if (p.grain) {
+      ctx.rect(p.x, p.y, Math.max(0.8, p.size * 0.52), Math.max(0.8, p.size * 0.52));
+    } else {
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    }
     ctx.fill();
   });
 
-  particles = particles.filter(p => p.life > 0 && p.y < window.innerHeight + 150);
+  particles = particles.filter(p => p.life > 0 && p.x > -80 && p.x < window.innerWidth + 80 && p.y > -80 && p.y < window.innerHeight + 80);
   requestAnimationFrame(draw);
 }
 
@@ -116,27 +141,25 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('is-visible');
-      burst(18);
+      circularDust(42, 95);
     }
   });
-}, { threshold: 0.28 });
+}, { threshold: 0.24 });
 
 document.querySelectorAll('.reveal-card, .experience, .wholesale-card').forEach(el => observer.observe(el));
 
+let scrollTimer = null;
 window.addEventListener('scroll', () => {
   const current = window.scrollY;
   scrollVelocity = current - lastScroll;
   lastScroll = current;
-  const intensity = Math.min(18, Math.max(3, Math.abs(scrollVelocity) / 8));
-  burst(intensity);
+  const amount = Math.min(24, Math.max(6, Math.abs(scrollVelocity) / 8));
+  circularDust(amount, 100);
+  clearTimeout(scrollTimer);
+  scrollTimer = setTimeout(() => { scrollVelocity = 0; }, 80);
 }, { passive: true });
-
-window.addEventListener('mousemove', (event) => {
-  pointerX = event.clientX / window.innerWidth;
-  pointerY = event.clientY / window.innerHeight;
-});
 
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
-burst(45);
+circularDust(90, 110);
 draw();
