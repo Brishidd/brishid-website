@@ -1,0 +1,216 @@
+/*
+  Global styles for the Brishid interactive catalogue.
+
+  The dark theme reflects the brand’s label and catalogue aesthetic. Each
+  product card uses a custom property (--color) passed from the
+  JavaScript to tint backgrounds and animated elements. Scroll‑based
+  animations rely on CSS only for smooth performance and minimal
+  dependency overhead.
+*/
+
+/* Reset margins and paddings for consistency */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  background-color: #0a0a0a;
+  color: #eaeaea;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Hero section styles */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.4) contrast(1.2);
+  z-index: -1;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  border: 2px solid #eaeaea;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.cta-button:hover {
+  background-color: #eaeaea;
+  color: #0a0a0a;
+}
+
+/* Catalogue section */
+.catalogue {
+  padding: 4rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.catalogue h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.catalogue-description {
+  max-width: 700px;
+  margin: 0.5rem auto 3rem;
+  color: #b8b8b8;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.product-card {
+  position: relative;
+  padding: 2rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.4s ease;
+  /* A slightly lighter background to provide contrast against the dark page */
+  background-color: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(6px);
+
+  /* Start hidden for reveal animations */
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+}
+
+.product-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--color);
+}
+
+.product-card p {
+  font-size: 0.95rem;
+  color: #cfcfcf;
+  margin-bottom: 1rem;
+}
+
+/* Animated swirl behind each card using pseudo-element */
+.product-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, var(--color) 0%, transparent 60%);
+  opacity: 0.25;
+  transform: rotate(45deg);
+  animation: spin 12s linear infinite;
+  z-index: -1;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* When observed, fade in product cards */
+.product-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+/* Footer styles */
+.site-footer {
+  background-color: #0e0e0e;
+  padding: 2rem 1rem;
+  color: #a5a5a5;
+  font-size: 0.9rem;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-brand h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.footer-links ul {
+  list-style: none;
+}
+
+.footer-links li + li {
+  margin-top: 0.5rem;
+}
+
+.footer-links a {
+  color: #c4c4c4;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: #fff;
+}
+
+.copyright {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #666;
+}
