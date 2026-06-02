@@ -1,103 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brishid Premium Powders Catalogue</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Brishid premium café ingredients: matcha, cacao, ube, spirulina, taro, turmeric and specialty powders for modern cafés." />
+  <title>Brishid | Immersive Powder Catalogue</title>
+  <link rel="stylesheet" href="assets/css/v3.css" />
 </head>
 <body>
-    <!-- Navigation with brand and colourful accent line -->
-    <nav>
-        <div class="nav-left">
-            <span class="nav-logo">BRISHID</span>
-            <div class="nav-subtitle">Café Ingredients</div>
-            <div class="nav-line"></div>
-        </div>
-        <div class="nav-right">
-            <a href="#catalogue" class="nav-link">Catalogue</a>
-            <a href="#cta" class="nav-link">Wholesale</a>
-        </div>
-    </nav>
+  <canvas id="powder-canvas" aria-hidden="true"></canvas>
 
-    <!-- Hero section with headline and call‑to‑action -->
-    <header class="hero">
-        <div class="hero-content">
-            <h1>Premium Powders for Modern Creators</h1>
-            <p>Carefully sourced. Expertly crafted. Designed for cafés, creators and professionals who demand the finest.</p>
-            <a href="#catalogue" class="cta-button">Explore Catalogue</a>
-        </div>
-    </header>
+  <nav class="site-nav" aria-label="Main navigation">
+    <a class="brand-lockup" href="#top" aria-label="Brishid home">
+      <span class="brand-name">BRISHID</span>
+      <span class="brand-subtitle">CAFÉ INGREDIENTS</span>
+      <span class="identity-line" aria-hidden="true"></span>
+    </a>
+    <div class="nav-links">
+      <a href="#catalogue">Powders</a>
+      <a href="#experience">Experience</a>
+      <a href="#wholesale">Wholesale</a>
+    </div>
+  </nav>
 
-    <!-- Catalogue section built from product data via JS -->
-    <section id="catalogue" class="catalogue">
-        <h2>Our Catalogue</h2>
-        <div id="product-grid" class="product-grid"></div>
+  <main id="top">
+    <section class="hero scene" data-powders="matcha ube spirulina turmeric cacao beetroot">
+      <div class="hero-copy">
+        <p class="eyebrow">Premium powder universe</p>
+        <h1>Ingredients that move cafés forward.</h1>
+        <p class="hero-text">A black-label catalogue experience for matcha, cacao, ube, spirulina, taro, turmeric and specialty powders designed for modern beverage menus.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#catalogue">Explore powders</a>
+          <a class="button button-ghost" href="#wholesale">Request sample</a>
+        </div>
+      </div>
+
+      <div class="hero-stage" aria-label="Brishid product presentation">
+        <div class="motion-orbit orbit-one"></div>
+        <div class="motion-orbit orbit-two"></div>
+        <div class="pouch hero-pouch">
+          <div class="pouch-notch"></div>
+          <div class="pouch-label">
+            <div class="mini-brand">BRISHID</div>
+            <div class="mini-subtitle">CAFÉ INGREDIENTS</div>
+            <div class="identity-line mini"></div>
+            <div class="pouch-title">MATCHA</div>
+            <div class="pouch-grade">Premium Powder</div>
+            <div class="pouch-script">抹茶</div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Wholesale and sample request call‑to‑action -->
-    <section id="cta" class="cta">
-        <h2>Elevate Your Menu</h2>
-        <p>Partner with Brishid and craft signature beverages with our premium powders. Contact us for wholesale pricing or request a complimentary sample kit.</p>
-        <a href="https://wa.me/16479373125" target="_blank" class="cta-primary">Request Sample on WhatsApp</a>
-        <a href="mailto:info@brishid.com" class="cta-secondary">Email Our Team</a>
+    <section id="experience" class="experience scene" data-powders="ube spirulina cacao strawberry coconut">
+      <div class="section-kicker">Scroll-reactive catalogue</div>
+      <h2>Every powder has its own colour, texture and movement.</h2>
+      <p>Brishid should not look like a green-only matcha brand. The website now treats every powder as a chapter in one premium ingredient universe, with multi-colour powder splashes responding to scroll.</p>
     </section>
 
-    <!-- Footer with contact information -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-left">
-                <h3>Brishid</h3>
-                <p>Elevating beverages through premium powders and purposeful ingredients.</p>
-            </div>
-            <div class="footer-right">
-                <p><strong>Email:</strong> info@brishid.com</p>
-                <p><strong>WhatsApp:</strong> +1 (647) 937‑3125</p>
-                <p><strong>Location:</strong> Toronto, Canada</p>
-            </div>
+    <section id="catalogue" class="catalogue scene" data-powders="matcha ube spirulina taro turmeric cacao hojicha strawberry vanilla ginger coconut beetroot">
+      <div class="catalogue-header">
+        <div>
+          <p class="section-kicker">Brishid Catalogue</p>
+          <h2>Choose your powder.</h2>
         </div>
-        <div class="footer-bottom">© 2026 Brishid. All rights reserved.</div>
-    </footer>
+        <p>Each card is prepared as a future product link. The product detail pages are placeholder-ready now and can be designed deeply one by one later.</p>
+      </div>
+      <div class="product-grid" id="product-grid"></div>
+    </section>
 
-    <!-- Scripts -->
-    <script>
-    // Brishid interactive catalogue script (inline to ensure execution)
-    document.addEventListener('DOMContentLoaded', () => {
-      const products = [
-        { id: 'matcha', name: 'Ceremonial Matcha', tagline: 'Japanese heritage in every cup.' },
-        { id: 'ube', name: 'Ube Powder', tagline: 'Rich, creamy purple sweetness.' },
-        { id: 'spirulina', name: 'Spirulina Powder', tagline: 'Vivid blue superfood for wellness.' },
-        { id: 'taro', name: 'Taro Powder', tagline: 'Sweet taro creaminess in style.' },
-        { id: 'turmeric', name: 'Turmeric Powder', tagline: 'Golden warmth and ancient spice.' },
-        { id: 'cacao', name: 'Cacao Powder', tagline: 'Deep chocolate for indulgent drinks.' },
-        { id: 'hojicha', name: 'Hojicha Powder', tagline: 'Roasted tea with nutty notes.' },
-        { id: 'strawberry', name: 'Strawberry Powder', tagline: 'Vibrant pink for fruity delights.' },
-        { id: 'vanilla', name: 'Vanilla Powder', tagline: 'Sweet and creamy classic flavour.' },
-        { id: 'ginger', name: 'Ginger Powder', tagline: 'Warm spice for invigorating blends.' },
-        { id: 'coconut', name: 'Coconut Powder', tagline: 'Tropical white for smooth sips.' },
-        { id: 'beetroot', name: 'Beetroot Powder', tagline: 'Bold magenta with earthy sweetness.' }
-      ];
-      const grid = document.getElementById('product-grid');
-      if (grid) {
-        products.forEach(product => {
-          const card = document.createElement('div');
-          card.classList.add('card', product.id);
-          card.innerHTML = `<h3>${product.name}</h3><p>${product.tagline}</p>`;
-          grid.appendChild(card);
-        });
-      }
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.25 });
-      document.querySelectorAll('.card').forEach(card => {
-        observer.observe(card);
-      });
-    });
-    </script>
+    <section id="wholesale" class="wholesale scene" data-powders="matcha cacao turmeric ginger vanilla">
+      <div class="wholesale-card">
+        <p class="section-kicker">Wholesale & samples</p>
+        <h2>Build signature drinks with Brishid powders.</h2>
+        <p>For cafés, distributors and beverage teams who want menu-ready powders, product consistency and a premium supplier story.</p>
+        <div class="wholesale-actions">
+          <a class="button button-primary" href="https://wa.me/16479373125" target="_blank" rel="noopener">Request samples on WhatsApp</a>
+          <a class="button button-ghost" href="mailto:info@brishid.com">Email Brishid</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <span class="brand-name footer-logo">BRISHID</span>
+      <span class="identity-line footer-line" aria-hidden="true"></span>
+    </div>
+    <p>Premium café ingredients for modern beverage businesses.</p>
+    <p>info@brishid.com · WhatsApp +1 647 937 3125</p>
+  </footer>
+
+  <script src="assets/js/v3.js"></script>
 </body>
 </html>
